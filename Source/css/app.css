@@ -1,0 +1,15 @@
+/***********************************************************************************
+ *	name:			app.css
+ *	project:		EXP
+ *	created:		07/16/2013	
+ *	author:			Luis Carlos Osorio Jayk
+ *	authorEmail:	luiscarlosjayk@gmail.com
+ */
+
+.w {
+	color: #51c651;
+}
+
+#map {
+	height: 400px;
+}

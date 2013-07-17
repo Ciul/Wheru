@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<!-- HEAD -->
+<head>
+	<title data-ng-bind="pageTitle">Wheru</title>
+	<meta charset="utf-8" />
+	<link href="img/favicon.ico" type="image/x-icon" rel="shortcut icon">
+	<link href="img/favicon.ico" type="image/x-icon" rel="icon">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="description" content="" />
+	<meta name="keywords" content="" />
+	<meta name="robots" content="index, follow" />
+	<meta name="author" content="Luis Carlos Osorio Jayk" />
+	
+	<!-- Stylesheets -->
+		<!-- Foundation -->
+		<link rel="stylesheet" href="css/vendor/foundation/normalize.css"/>
+		<link rel="stylesheet" href="css/vendor/foundation/foundation.css"/>
+		
+		<!-- Leaflet -->
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.2/leaflet.css" />
+		
+		<!-- Icomoon -->
+		<link rel="stylesheet" href="css/vendor/icomoon/style.css"/>
+		
+		<!-- App -->
+		<link rel="stylesheet" href="css/app.css"/>
+	
+		
+	<!-- Angular base path -->
+	<base href="/plataforma/" />
+</head>
+<!--/ HEAD -->
+
+<!-- BODY -->
+<body>
+	<div data-ng-include="'views/topbar.html'"></div>
+	<div data-alert-bar alertmessage="errorService.errorMessage"></div>
+	<div data-ng-view></div>
+	<div data-ng-include="'views/footer.html'"></div>
+	
+	
+	<!-- Javascript -->
+		<!-- Modernizr -->
+		<script type="text/javascript" src="js/vendor/foundation/custom.modernizr.js"></script>
+		
+		<!-- Requirejs -->
+		<script type="text/javascript" data-main="js/config" src="js/vendor/require/require.js"></script>
+		
+</body>
+<!--/ BODY -->
+</html>

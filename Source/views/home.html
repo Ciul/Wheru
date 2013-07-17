@@ -1,0 +1,39 @@
+<!-- Home -->
+<div class="row" data-ng-controller="MainController">
+	<div class="small-9 columns">
+		<div id="map" data-ng-controller="MapController"></div>
+	</div>
+	
+	<div class="small-3 columns" data-ng-controller="PlacesController">
+		<button type="button" data-ng-click="connect()" data-ng-hide="FourSquare.connected">Search</button>
+		<ul class="small-block-grid-1">
+			<li data-ng-repeat="place in places">
+				<h4>{{place.name}}</h4>
+				<div><span data-icon="bars"></span></div>
+				<ul>
+					<li>
+						<span data-icon="check-alt"></span>
+						<span>{{place.stats.checkinsCount}}</span>
+					</li>
+					<li>
+						<span data-icon="group"></span>
+						<span>{{place.stats.usersCount}}</span>
+					</li>
+				</ul>
+				<button type="button" class="button tiny" data-ng-click="viewMarker($index)">
+					<span data-icon="earth"></span> 
+					<span>Ver</span>
+				</button>
+			</li>
+		</ul>
+		
+	</div>
+	
+	<!--<div class="small-12 columns">
+		<button type="button" class="button tiny secondary" data-ng-class="{success: debug}" data-ng-click="toggledebug()">Debug</button>
+		<div class="panel" data-ng-show="debug">
+			<h3>Places</h3>
+		</div>
+	</div>-->
+</div>
+<!--/ Home -->

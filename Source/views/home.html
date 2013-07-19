@@ -1,15 +1,17 @@
 <!-- Home -->
-<div class="row" data-ng-controller="MainController">
+<div class="row">
 	<div class="small-9 columns">
-		<div id="map" data-ng-controller="MapController"></div>
+		<div id="map"></div>
 	</div>
 	
-	<div class="small-3 columns" data-ng-controller="PlacesController">
-		<button type="button" data-ng-click="connect()" data-ng-hide="FourSquare.connected">Connect</button>
+	<div class="small-3 columns">
+		<button type="button" class="button" data-ng-click="connect()" data-ng-hide="FourSquare.connected">Connect</button>
+		<div class="alert-box alert no-places" data-ng-hide="places.length" data-ng-show="flags.searched">
+			<p>No <i>trending</i> places found.</p>
+		</div>
 		<ul class="small-block-grid-1">
 			<li data-ng-repeat="place in places">
-				<h4>{{place.name}}</h4>
-				<div><span data-icon="bars"></span></div>
+				<h6>{{place.name}}</h6>
 				<ul>
 					<li>
 						<span data-icon="check-alt"></span>

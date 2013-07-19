@@ -13,9 +13,10 @@ requirejs.config({
 		jquery:				'vendor/jquery/jquery.min',
 		jquerync:			'vendor/jquery/jquery.noconflict',
 		moofb:				'vendor/moofb/moofb',
-		leaftlet:			'http://cdn.leafletjs.com/leaflet-0.6.2/leaflet',
+		leaflet:			'http://cdn.leafletjs.com/leaflet-0.6.2/leaflet',
 		modernizr:			'vendor/foundation/custom.modernizr',
-		foundation:			'vendor/foundation/foundation.min'
+		foundation:			'vendor/foundation/foundation.min',
+		leafletPlugins:		'vendor/leaflet/plugins'
 	},
 	map: {
 		'*': {
@@ -61,6 +62,9 @@ requirejs.config({
 				jQuery(document).foundation(); // Initialize foundation over the page.
 			}
 		},
+		leafletPlugins: {
+			deps: ['leaflet']
+		},
 		moofb:	{
 			deps: ['mootools']
 		}
@@ -80,7 +84,7 @@ require([
 	'controllers/PlacesController',
 	'directives/debug',
 	'directives/email',
-	'directives/icon'
+	'directives/icon',
 	],
 	function(angular, app, domReady) {
 		
@@ -94,7 +98,7 @@ require([
 				$routeProvider.
 					when('/', {
 						templateUrl:		'views/home.html',
-						controller:			'HomeController'
+						controller:			'MainController'
 					}).
 					when('/about', {
 						templateUrl:		'views/about.html',

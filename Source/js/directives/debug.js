@@ -1,7 +1,7 @@
 define(['directives/directives'], function(directives) {
 	directives.directive('debug', function() {
 		return {
-			restrict:	'E',
+			restrict:	'AE',
 			scope: {
 				expression: '=val'
 			},

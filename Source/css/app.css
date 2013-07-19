@@ -10,6 +10,70 @@
 	color: #51c651;
 }
 
+
+/***********
+ * Home Page
+ */
 #map {
 	height: 400px;
+}
+
+
+/************
+ * About Page
+ */
+#about-page .profile {
+	text-align: center;
+}
+
+#about-page .profile img {
+	box-shadow: 0px 0px 8px #AAA;
+	
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale"); /* Firefox 10+, Firefox on Android */
+	filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: gray; /* IE6-9 */
+    -webkit-filter: grayscale(100%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+	
+	transition: all 2s;
+	-moz-transition: -moz-filter 2s;
+	-webkit-transition: -webkit-filter 2s;
+	-o-transtion: -o-filter 2s;
+}
+
+#about-page .profile:hover img {
+	filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'1 0 0 0 0, 0 1 0 0 0, 0 0 1 0 0, 0 0 0 1 0\'/></filter></svg>#grayscale");
+    filter: grayscale(0%);
+    -moz-filter: grayscale(0%);
+    -ms-filter: grayscale(0%);
+    -o-filter: grayscale(0%);
+    filter: none ; /* IE6-9 */
+    zoom:1;
+    -webkit-filter: grayscale(0%); /* Chrome 19+, Safari 6+, Safari 6+ iOS */
+}
+
+/********
+ * Links
+ */
+a.green,
+a.green:visited,
+a.green:link {
+	color: #00cc66;
+}
+
+a.green:hover {
+	color: #008341;
+}
+
+::selection
+{
+	color:#00cc66;
+	background-color: #008341;
+}
+::-moz-selection
+{
+	color:#00cc66;
+	background-color: #fff;
 }

@@ -1,20 +1,97 @@
-define(['controllers/controllers', 'services/FourSquareService'], function(controllers) {
-	controllers.controller('MainController', ['$scope', 'FourSquare',
-		function($scope, $FourSquare) {
-			$scope.FourSquare	= $FourSquare;
-			
-			$scope.debug		= false;
-			$scope.toggledebug = function() {
-				$scope.debug = !$scope.debug;
-			};
-			
-			$scope.$on('placeClicked', function(event, place) {
-				$scope.$broadcast('placeMarker', place);
-			});
-			
-			$scope.$on('mapClicked', function(event, e) {
-				$scope.$broadcast('mapSearch', e);
-			});
-		}
-	]);
+define([
+	'controllers/controllers',
+	'leaflet',
+	'services/FourSquareService'
+	], function(controllers, leaflet) {
+		controllers.controller('MainController', ['$scope', 'FourSquare', '$rootScope',
+			function($scope, $FourSquare, $rootScope) {
+				// Set page title to Home.
+				$rootScope.pageTitle = 'Wheru :: Home';
+				// Load FourSquare service on $scope.
+				$scope.FourSquare	= $FourSquare;
+				// Trending places.
+				$scope.places			= [];
+				// Map markers for each Place.
+				$scope.placesMarkers	= [];
+				// Flags
+				$scope.flags = {
+					searched:	false,
+					searching:	false
+				};
+				// Connect to FourSquare app and request permissions.
+				$scope.connect = function() {
+					if (!$scope.FourSquare.connected)
+						$scope.FourSquare.connect();
+				};
+				
+				var CloudMadeApiKey		= '457738a985034df2833a7873ac048434'; // http://cloudmade.com/
+				// Leaflet map.
+				$scope.map = map = leaflet.map('map')
+					.setView([4.62,-74.12], 15)
+					.whenReady(function() {
+						this.locate({
+							setView: true
+						});
+					});
+				// Initialize map.
+				leaflet.tileLayer('http://{s}.tile.cloudmade.com/'+ CloudMadeApiKey +'/997/256/{z}/{x}/{y}.png', {
+					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+					maxZoom: 18
+				}).addTo(map);
+				
+				var popup = L.popup();
+
+				function onMapClick(e) {
+					// If not connected to FourSquare yet, then connect.
+					if (!$scope.FourSquare.connected)
+						$scope.FourSquare.connect();
+					else {
+						// If connected then go ahead and search trending places.
+						$scope.places	= $scope.FourSquare.trendings(String.from(e.latlng.lat) + ',' + String.from(e.latlng.lng));
+						// Map search is now dirty.
+						$scope.searched	= true;
+					}
+				}
+				// Map click event.
+				map.on('click', onMapClick);
+				
+				// View a place on the map.
+				$scope.viewMarker = function(index) {
+					$scope.placesMarkers[index].openPopup();
+				}
+				
+				// Add/Remove markers according to trending places found.
+				function updatePlaceMarkers(newPlaces, oldPlaces) {
+					if (oldPlaces == newPlaces)
+						return;
+					
+					// Remove old places
+					var i = oldPlaces.length;
+					while (i--) {
+						map.removeLayer($scope.placesMarkers[i]);
+						$scope.placesMarkers.pop();
+					}
+					
+					// Create new markers for places.
+					i = newPlaces.length;
+					while (i--) {
+						// Create marker and add it to map.
+						var marker = leaflet.marker(
+							[newPlaces[i].location.lat, newPlaces[i].location.lng],
+							{
+								riseOnHover:	true
+							}
+						)
+						.bindPopup('<h6>' + newPlaces[i].name + '</h6>')
+						.addTo(map);
+						// Save reference for marker.
+						$scope.placesMarkers.unshift(marker);
+					}
+				}
+				window.s = $scope;
+				// Listen for places changes.
+				$scope.$watch('places', updatePlaceMarkers);
+				
+			}
+		]);
 });

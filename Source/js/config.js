@@ -80,8 +80,6 @@ require([
 	'controllers/HomeController',
 	'controllers/AboutController',
 	'controllers/MainController',
-	'controllers/MapController',
-	'controllers/PlacesController',
 	'directives/debug',
 	'directives/email',
 	'directives/icon',

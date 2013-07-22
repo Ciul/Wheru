@@ -25,6 +25,11 @@ define([
 				};
 				
 				var CloudMadeApiKey		= '457738a985034df2833a7873ac048434'; // http://cloudmade.com/
+				
+				// Map stuff
+				var popup			= leaflet.popup(),
+					searchCircle;
+				
 				// Leaflet map.
 				$scope.map = map = leaflet.map('map')
 					.setView([4.62,-74.12], 15)
@@ -33,14 +38,15 @@ define([
 							setView: true
 						});
 					});
+				
+				
 				// Initialize map.
 				leaflet.tileLayer('http://{s}.tile.cloudmade.com/'+ CloudMadeApiKey +'/997/256/{z}/{x}/{y}.png', {
 					attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
 					maxZoom: 18
 				}).addTo(map);
 				
-				var popup = L.popup();
-
+				
 				function onMapClick(e) {
 					// If not connected to FourSquare yet, then connect.
 					if (!$scope.FourSquare.connected)
@@ -50,6 +56,15 @@ define([
 						$scope.places	= $scope.FourSquare.trendings(String.from(e.latlng.lat) + ',' + String.from(e.latlng.lng));
 						// Map search is now dirty.
 						$scope.searched	= true;
+					}
+					
+					// If first time searching create search scope circle, otherwise just update it's position.
+					if (!$scope.searched) {
+						searchCircle = leaflet.circle([e.latlng.lat, e.latlng.lng], 2000, {
+							fillOpacity: 0
+						}).addTo(map);
+					} else {
+						searchCircle.setLatLng([e.latlng.lat, e.latlng.lng]);
 					}
 				}
 				// Map click event.
